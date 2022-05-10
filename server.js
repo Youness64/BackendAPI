@@ -12,3 +12,11 @@ app.get('/', function (req, res) {
         console.log("Example app listening at http://%s:%s",
         host, port)
         })
+
+
+
+
+const dotenv = require('dotenv');
+dotenv.config();
+const  port = process.env.PORT;
+console.log('Your port is ',port,'');

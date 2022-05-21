@@ -1,15 +1,29 @@
-const query = require('../bd/db-connection');
+const dataBase = require('../bd/db-connection');
 
 
-        tableName ='api';
+
+const stockConstructor = function (stock) {
+    this.diametre = stock.diametre;
+    this.taille = stock.taille;
+    this.nom = stock.nom;
+    this.type = stock.type;
+};
 
 
-        find = async(params ={}) => {
-            let sql = 'SHOW TABLES FROM api';
 
-            if(!Object.keys(params).length){
-                return await query(sql);
-            }
-        }
 
-module.export = find;
+        find = result_bdd_request => {
+            dataBase.query('SELECT * FROM article ', (error, response) => {
+                if (error) {
+                    result_bdd_request(error);
+                }
+                // Le premier null représente les erreurs
+                result_bdd_request(null, response);
+            });
+        };
+            
+
+module.exports = {  
+                    find,
+                    stockConstructor,
+};

@@ -1,16 +1,19 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
+const mysql = require('mysql');
+const dotenv = require('dotenv');
 
-    host : 'localhost',
-    user : 'root',
-    password: 'root'
+dotenv.config(); // Initialisation des variables d'environnements
+
+
+
+const connection = mysql.createConnection({
+
+    host: process.env.HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+
 });
 
-connection.connect();
 
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields){
-    if(err) throw err;
-    console.log('The solution is : ', rows[0].solution);
-});
+module.exports = connection;
 
-connection.end();

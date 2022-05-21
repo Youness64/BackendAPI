@@ -1,8 +1,14 @@
 const stockModel = require('../model/stock.model')
 
-getStock = async (req, res, next) => {
-    let stockList = await stockModel.find();
-    res.send(stockList);
+getStock = (request, response) => {
+    stockModel.find((error, data) => {
+        if (error)
+            response.status(500).send({
+                message:
+                    error.message || "Une erreur est survenue en essayant de récupérer la table stock."
+            });
+        else response.send(data);
+    })
 };
 
-module.export = getStock;
+module.exports = {getStock};

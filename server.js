@@ -1,22 +1,35 @@
 const express = require('express')
 const app = express()
-
-app.get('/', function (req, res) {
-    res.send('Hello World!')
-    })
-
-
-    var server = app.listen(8081, function () {
-        var host = server.address().address
-        var port = server.address().port
-        console.log("Example app listening at http://%s:%s",
-        host, port)
-        })
+const dotenv = require('dotenv')
+const userRouter = require('./route/api.route')
 
 
 
 
-const dotenv = require('dotenv');
 dotenv.config();
 const  port = process.env.PORT;
-console.log('Your port is ',port,'');
+console.log('Your port is ',port,'')
+
+
+
+
+const server = express();
+server.use(express.json());
+server.set('json spaces', 2);
+
+
+
+server.use('/', userRouter);
+
+
+server.listen(3000);
+
+
+
+
+
+
+module.exports = {server};
+
+
+
